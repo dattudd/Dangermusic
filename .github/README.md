@@ -1,5 +1,5 @@
 <h2 align="center">
-    ──「 ᴀɴᴏɴ ダ ᴍᴜsɪᴄ 」──
+    ──「 ˹𝖭𝖺𝗇𝖼𝗒 ⋊ Music˼ 」──
 </h2>
 
 <p align="center">
