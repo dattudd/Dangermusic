@@ -1,5 +1,4 @@
-import random
-from pyrogram import Client
+pyrogram import Client
 from pyrogram.types import Message
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -44,4 +43,3 @@ async def join_watcher(_, message):
             await app.send_photo(message.chat.id, photo=random.choice(photo), caption=msg, reply_markup=InlineKeyboardMarkup([
             [InlineKeyboardButton(f"🥳ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴄʜᴀᴛ🥳", url=f"https://t.me/{app.username}?startgroup=true")]
          ]))
-
