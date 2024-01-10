@@ -30,7 +30,6 @@ def private_panel(_):
             InlineKeyboardButton(text=_["S_B_2"], url=config.SUPPORT_CHAT),
         ],
         [
-            InlineKeyboardButton(text=_["S_B_6"], url=config.SUPPORT_CHANNEL),
             InlineKeyboardButton(text=_["S_B_7"], url="https://telegra.ph/file/b1f8ff56996c3d952fa48.mp4"),
         ],
     ]
