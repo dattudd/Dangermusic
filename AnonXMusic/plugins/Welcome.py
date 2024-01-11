@@ -1,61 +1,165 @@
-import random
-from pyrogram import Client
-from pyrogram.types import Message
-from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from AnonX import app  
-
-photo = [
-    "https://telegra.ph/file/c7b551119ea15dc365f68.jpg",
-    "https://telegra.ph/file/1d19bdc70cb7ef3d60001.jpg",
-    "https://telegra.ph/file/cb746616b6189e00fec71.jpg",
-    "https://telegra.ph/file/71f57ec08d362b2247c6b.jpg",
-    "https://telegra.ph/file/aef32840b7c2943031ad6.jpg",
-    "https://telegra.ph/file/005f3268e52de060eab78.jpg",
-    "https://telegra.ph/file/c04036447f2936ee4dd75.jpg",
-    "https://telegra.ph/file/5cf94672c06083e36773f.jpg",
-    "https://telegra.ph/file/952bac570b471a4243c8d.jpg",
-    "https://telegra.ph/file/661da902ca073202ad4ba.jpg",
-    "https://telegra.ph/file/89b49320d979989548003.jpg",
-    "https://telegra.ph/file/01a5eab9744506eff3f83.jpg",
-    "https://telegra.ph/file/eb38913e41771d1a16847.jpg",
-    "https://telegra.ph/file/26f34e070431a858d31f5.jpg",
-    "https://telegra.ph/file/e0c01f79896a32022c6ca.jpg",
-    "https://telegra.ph/file/d424fcf4a72ec8e1a28c7.jpg",
-    "https://telegra.ph/file/922e7ce9c5e0bafafeb34.jpg",
-    "https://telegra.ph/file/f82d044b2f3133cec48c2.jpg",
-    "https://telegra.ph/file/0f424d0824900939bb32a.jpg",
-    "https://telegra.ph/file/0e84310ec975e8e6ebca9.jpg",
-    "https://telegra.ph/file/1646ddc99a7c77f51b3a0.jpg",
-    "https://telegra.ph/file/3c5ac8d87b622260445be.jpg",
-    "https://telegra.ph/file/dfa43563bd68849a46a39.jpg",
-    "https://telegra.ph/file/4506a375b415971355ff2.jpg",
-    "https://telegra.ph/file/0d0cdfda3b9dac9730476.jpg",
-    "https://telegra.ph/file/4d2c9229c567f9416143f.jpg",
-    "https://telegra.ph/file/77ba544ccfb6bf8ba7b03.jpg",
-    "https://telegra.ph/file/0387d64a44d76e0d53deb.jpg",
-    "https://telegra.ph/file/9e346de01cb863b30367f.jpg",
-    "https://telegra.ph/file/26a0d446102c63a1bbcca.jpg",
-
-]
+import os
+from PIL import ImageDraw, Image, ImageFont, ImageChops
+from pyrogram import *
+from pyrogram.types import *
+from logging import getLogger
+from anonx import app
 
 
-@app.on_message(filters.new_chat_members, group=3)
-async def join_watcher(_, message):    
-    chat = message.chat
 
-    for members in message.new_chat_members:
 
-            count = await app.get_chat_members_count(chat.id)
 
-            msg = (
-                f"🥀𝐇ᴇʏ {message.from_user.mention} 𝐖ᴇʟᴄᴏᴍᴇ 𝐈ɴ 𝐀 𝐍ᴇᴡ 𝐆ʀᴏᴜᴘ🥳\n\n"
-                f"☘️𝐂ʜᴀᴛ 𝐍ᴀᴍᴇ: {message.chat.title}\n➖➖➖➖➖➖➖➖➖➖➖\n"
-                f"⚡️𝐂ʜᴀᴛ 𝐔.𝐍: @{message.chat.username}\n➖➖➖➖➖➖➖➖➖➖➖\n"
-                f"💖𝐔ʀ 𝐈d: {message.from_user.id}\n➖➖➖➖➖➖➖➖➖➖➖\n"
-                f"✨️𝐔ʀ 𝐔.𝐍: @{message.from_user.username}\n➖➖➖➖➖➖➖➖➖➖➖\n"
-                f"🌠𝐂ᴏᴍᴘʟᴇᴛᴇᴅ {count} 𝐌ᴇᴍʙᴇʀ𝐬🎉"
-            )
-            await app.send_photo(message.chat.id, photo=random.choice(photo), caption=msg, reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton(f"🥳 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴄʜᴀᴛ 🥳", url=f"https://t.me/{app.username}?startgroup=true")]
-         ]))
+LOGGER = getLogger(__name__)
+
+class WelDatabase:
+    def __init__(self):
+        self.data = {}
+
+    async def find_one(self, chat_id):
+        return chat_id in self.data
+
+    async def add_wlcm(self, chat_id):
+        self.data[chat_id] = {}  # You can store additional information related to the chat
+        # For example, self.data[chat_id]['some_key'] = 'some_value'
+
+    async def rm_wlcm(self, chat_id):
+        if chat_id in self.data:
+            del self.data[chat_id]
+
+wlcm = WelDatabase()
+
+class temp:
+    ME = None
+    CURRENT = 2
+    CANCEL = False
+    MELCOW = {}
+    U_NAME = None
+    B_NAME = None
+
+# ... (rest of your code remains unchanged)
+
+# ... (FUCK you randi ke bacvhhe )
+
+def circle(pfp, size=(500, 500)):
+    pfp = pfp.resize(size, Image.ANTIALIAS).convert("RGBA")
+    bigsize = (pfp.size[0] * 3, pfp.size[1] * 3)
+    mask = Image.new("L", bigsize, 0)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse((0, 0) + bigsize, fill=255)
+    mask = mask.resize(pfp.size, Image.ANTIALIAS)
+    mask = ImageChops.darker(mask, pfp.split()[-1])
+    pfp.putalpha(mask)
+    return pfp
+
+def welcomepic(pic, user, chatname, id, uname):
+    background = Image.open("DAXXMUSIC/assets/wel2.png")
+    pfp = Image.open(pic).convert("RGBA")
+    pfp = circle(pfp)
+    pfp = pfp.resize((825, 824))
+    draw = ImageDraw.Draw(background)
+    font = ImageFont.truetype('DAXXMUSIC/assets/font.ttf', size=110)
+    welcome_font = ImageFont.truetype('DAXXMUSIC/assets/font.ttf', size=60)
+    draw.text((2100, 1420), f'ID: {id}', fill=(12000, 12000, 12000), font=font)
+    pfp_position = (1990, 435)
+    background.paste(pfp, pfp_position, pfp)
+    background.save(f"downloads/welcome#{id}.png")
+    return f"downloads/welcome#{id}.png"
+
+# FUCK you bhosadiwale 
+
+
+@app.on_message(filters.command("wel") & ~filters.private)
+async def auto_state(_, message):
+    usage = "**Usage:**\n⦿/wel [on|off]\n➤ᴀᴜʀ ʜᴀᴀɴ ᴋᴀɴɢᴇʀs ᴋᴀʀᴏ ᴀʙ ᴄᴏᴘʏ ʙʜᴏsᴀᴅɪᴡᴀʟᴇ\n➤sᴀʟᴏɴ ᴀᴜʀ ʜᴀᴀɴ sᴛʏʟɪsʜ ғᴏɴᴛ ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ ɪɴ ᴛʜᴇ ᴛʜᴜᴍʙɴᴀɪʟ.!\ᴀᴜʀ ʜᴀᴀɴ ᴀɢʀ ᴋʜᴜᴅ ᴋɪ ᴋᴀʀɴɪ ʜᴀɪ ᴛᴏ ɢᴀᴀɴᴅ ᴍᴀʀᴀᴏ ʙᴇᴛɪᴄʜᴏᴅ"
+    if len(message.command) == 1:
+        return await message.reply_text(usage)
+    chat_id = message.chat.id
+    user = await app.get_chat_member(message.chat.id, message.from_user.id)
+    if user.status in (
+        enums.ChatMemberStatus.ADMINISTRATOR,
+        enums.ChatMemberStatus.OWNER,
+    ):
+        A = await wlcm.find_one(chat_id)
+        state = message.text.split(None, 1)[1].strip().lower()
+        if state == "on":
+            if A:
+                return await message.reply_text("Special Welcome Already Enabled")
+            elif not A:
+                await wlcm.add_wlcm(chat_id)
+                await message.reply_text(f"Enabled Special Welcome in {message.chat.title}")
+        elif state == "off":
+            if not A:
+                return await message.reply_text("Special Welcome Already Disabled")
+            elif A:
+                await wlcm.rm_wlcm(chat_id)
+                await message.reply_text(f"Disabled Special Welcome in {message.chat.title}")
+        else:
+            await message.reply_text(usage)
+    else:
+        await message.reply("Only Admins Can Use This Command")
+
+# ... (copy paster teri maa ki chut  )
+
+@app.on_chat_member_updated(filters.group, group=-3)
+async def greet_group(_, member: ChatMemberUpdated):
+    chat_id = member.chat.id
+    A = await wlcm.find_one(chat_id)  # Corrected this line
+    if not A:
+        return
+    if (
+        not member.new_chat_member
+        or member.new_chat_member.status in {"banned", "left", "restricted"}
+        or member.old_chat_member
+    ):
+        return
+    user = member.new_chat_member.user if member.new_chat_member else member.from_user
+    try:
+        pic = await app.download_media(
+            user.photo.big_file_id, file_name=f"pp{user.id}.png"
+        )
+    except AttributeError:
+        pic = "DAXXMUSIC/assets/upic.png"
+    if (temp.MELCOW).get(f"welcome-{member.chat.id}") is not None:
+        try:
+            await temp.MELCOW[f"welcome-{member.chat.id}"].delete()
+        except Exception as e:
+            LOGGER.error(e)
+    try:
+        welcomeimg = welcomepic(
+            pic, user.first_name, member.chat.title, user.id, user.username
+        )
+        temp.MELCOW[f"welcome-{member.chat.id}"] = await app.send_photo(
+            member.chat.id,
+            photo=welcomeimg,
+            caption=f"""
+**Wᴇʟᴄᴏᴍᴇ Tᴏ {member.chat.title}
+➖➖➖➖➖➖➖➖➖➖➖➖
+Nᴀᴍᴇ ✧ {user.mention}
+Iᴅ ✧ {user.id}
+Usᴇʀɴᴀᴍᴇ ✧ @{user.username}
+➖➖➖➖➖➖➖➖➖➖➖➖**
+""",
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"⦿ ᴀᴅᴅ ᴍᴇ ⦿", url=f"https://t.me/YumikooBot?startgroup=true")]])
+        )
+    except Exception as e:
+        LOGGER.error(e)
+    try:
+        os.remove(f"downloads/welcome#{user.id}.png")
+        os.remove(f"downloads/pp{user.id}.png")
+    except Exception as e:
+        pass
+
+# ... (resfuxbk 
+
+@app.on_message(filters.new_chat_members & filters.group, group=-1)
+async def bot_wel(_, message):
+    for u in message.new_chat_members:
+        if u.id == app.me.id:
+            await app.send_message(LOG_CHANNEL_ID, f"""
+**NEW GROUP
+➖➖➖➖➖➖➖➖➖➖➖➖
+NAME: {message.chat.title}
+ID: {message.chat.id}
+USERNAME: @{message.chat.username}
+➖➖➖➖➖➖➖➖➖➖➖➖**
+""")
