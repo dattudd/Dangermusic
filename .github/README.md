@@ -1,5 +1,5 @@
 <h2 align="center">
-    ──「 ˹Danger ⋊ Music˼ 」──
+    ──「 ˹Nancy ⋊ Music˼ 」──
 </h2>
 
 <p align="center">
