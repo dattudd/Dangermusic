@@ -1,9 +1,9 @@
 <h2 align="center">
-    ──「 ˹𝖭𝖺𝗇𝖼𝗒 ⋊ Music˼ 」──
+    ──「 ˹Danger ⋊ Music˼ 」──
 </h2>
 
 <p align="center">
-  <img src="https://telegra.ph/file/3e6f5c53b28076c9389dd.jpg">
+  <img src="https://telegra.ph/file/bc90c8f8d3bbb4f55a4a4.jpg">
 </p>
 
 <p align="center">
