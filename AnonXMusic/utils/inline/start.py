@@ -32,6 +32,6 @@ def private_panel(_):
         [
              InlineKeyboardButton(text=_["S_B_6"], url=config.DPZ_CHANNEL),
         ],
-        ],
+        
     ]
     return buttons
